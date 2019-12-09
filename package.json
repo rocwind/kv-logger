@@ -1,0 +1,37 @@
+{
+  "name": "kv-logger",
+  "version": "0.1.0",
+  "description": "a lightweight logger tool for k-v style log",
+  "main": "lib/bundle.js",
+  "module": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib/"
+  ],
+  "scripts": {
+    "clean": "del-cli lib",
+    "build": "npm run clean && npm run compile && rollup lib/index.js --file lib/bundle.js --format cjs",
+    "compile": "tsc --outDir lib -d",
+    "preversion": "npm run build",
+    "postversion": "git push origin master && git push origin --tags && npm publish",
+    "test": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rocwind/kv-logger.git"
+  },
+  "keywords": [
+    "log"
+  ],
+  "author": "Roc",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rocwind/kv-logger/issues"
+  },
+  "homepage": "https://github.com/rocwind/kv-logger#readme",
+  "devDependencies": {
+    "del-cli": "^3.0.0",
+    "rollup": "^1.27.9",
+    "typescript": "^3.7.3"
+  }
+}
