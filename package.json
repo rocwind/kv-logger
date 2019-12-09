@@ -12,8 +12,7 @@
     "clean": "del-cli lib",
     "build": "npm run clean && npm run compile && rollup lib/index.js --file lib/bundle.js --format cjs",
     "compile": "tsc --outDir lib -d",
-    "preversion": "npm run build",
-    "postversion": "git push origin master && git push origin --tags && npm publish",
+    "release": "npm run build && standard-version --releaseCommitMessageFormat 'chore(release): {{currentTag}} [skip ci]' && git push --follow-tags origin master && npm publish",
     "test": "npm run build"
   },
   "repository": {
@@ -32,6 +31,7 @@
   "devDependencies": {
     "del-cli": "^3.0.0",
     "rollup": "^1.27.9",
+    "standard-version": "^7.0.1",
     "typescript": "^3.7.3"
   }
 }
