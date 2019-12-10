@@ -109,23 +109,36 @@ const composeLog = (
     return log;
 };
 
-const createLogMethod = (level: LogLevel, context?: Record<string, any>) => (
+const logMethod = (
+    level: LogLevel,
     msg: string | Record<string, any> | Error,
-    params?: Record<string, any>
+    params?: Record<string, any>,
+    context?: Record<string, any>
 ) => {
     const log = composeLog(level, msg, params, context);
     transports.forEach(transport => transport.write(level, log));
 };
+
+const bindLogMethod = (level: LogLevel, context?: Record<string, any>) => (
+    msg: string | Record<string, any> | Error,
+    params?: Record<string, any>
+) => logMethod(level, msg, params, context);
 
 const createLogger = (context?: Record<string, any>) => {
     const logger = {
         bindContext: (subContext: Record<string, any>) =>
             createLogger(Object.assign({}, context, subContext)),
 
-        debug: createLogMethod(LogLevel.Debug, context),
-        info: createLogMethod(LogLevel.Info, context),
-        warn: createLogMethod(LogLevel.Warn, context),
-        error: createLogMethod(LogLevel.Error, context),
+        log: (
+            level: LogLevel,
+            msg: string | Record<string, any> | Error,
+            params?: Record<string, any>
+        ) => logMethod(level, msg, params, context),
+
+        debug: bindLogMethod(LogLevel.Debug, context),
+        info: bindLogMethod(LogLevel.Info, context),
+        warn: bindLogMethod(LogLevel.Warn, context),
+        error: bindLogMethod(LogLevel.Error, context),
     };
     return logger;
 };
