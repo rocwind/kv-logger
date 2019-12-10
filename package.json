@@ -12,7 +12,7 @@
     "clean": "del-cli lib",
     "build": "npm run clean && npm run compile && rollup lib/index.js --file lib/bundle.js --format cjs",
     "compile": "tsc --outDir lib -d",
-    "release": "npm run build && standard-version --releaseCommitMessageFormat 'chore(release): {{currentTag}} [skip ci]' && git push --follow-tags origin master && npm publish",
+    "release": "npm run build && standard-version --releaseCommitMessageFormat 'chore(release): {{currentTag}}' && git push --follow-tags origin master && npm publish",
     "test": "npm run build"
   },
   "repository": {
