@@ -1,5 +1,8 @@
 import { formatTime } from './format';
 
+/**
+ * Log levels
+ */
 export enum LogLevel {
     Debug = 'debug',
     Info = 'info',
@@ -7,41 +10,12 @@ export enum LogLevel {
     Error = 'error',
 }
 
-export enum LogFormat {
-    Text = 'text',
-    JSON = 'json',
-}
-
-export interface LogConfig {
-    level: LogLevel;
-    format: LogFormat;
-}
-
-const config: LogConfig = {
-    level: LogLevel.Debug,
-    format: LogFormat.Text,
-};
-
-export const setConfig = (options: Partial<LogConfig>) => {
-    Object.assign(config, options);
-};
-
+/**
+ * Interface that handles transport logs, can be extend to customized log output
+ */
 export interface LogTransport {
-    write: (text: string, level: LogLevel) => void;
-    end: () => void;
+    write: (level: LogLevel, log: Record<string, any>) => void;
 }
-
-export class ConsoleLogTransport implements LogTransport {
-    write(text: string, level: LogLevel) {
-        console[level](text);
-    }
-    end() {}
-}
-
-let transports: LogTransport[] = [new ConsoleLogTransport()];
-export const setLogTransports = (entries: LogTransport[]) => {
-    transports = entries;
-};
 
 const logPriorityByLevel: Record<LogLevel, number> = {
     [LogLevel.Debug]: 1,
@@ -50,15 +24,75 @@ const logPriorityByLevel: Record<LogLevel, number> = {
     [LogLevel.Error]: 4,
 };
 
-export type KVParams = Record<string, any>;
+/**
+ * Filter helper for filter logs by level
+ */
+export class LogLevelFilter implements LogTransport {
+    constructor(private transport: LogTransport, private level: LogLevel) {}
+    write(level: LogLevel, log: Record<string, any>) {
+        if (logPriorityByLevel[level] < logPriorityByLevel[this.level]) {
+            return;
+        }
+        this.transport.write(level, log);
+    }
+}
 
-const formatLog = (
+/**
+ * Formats that ConsoleTransport supports
+ */
+export enum ConsoleFormat {
+    Text = 'text',
+    JSON = 'json',
+}
+
+/**
+ * Default console log transport, output logs directly to console
+ */
+export class ConsoleTransport implements LogTransport {
+    constructor(private format: ConsoleFormat) {}
+    write(level: LogLevel, log: Record<string, any>) {
+        let text: string;
+        switch (this.format) {
+            case ConsoleFormat.JSON:
+                text = JSON.stringify(log);
+                break;
+            case ConsoleFormat.Text:
+            default:
+                text = Object.keys(log)
+                    .map(key => key + '=' + log[key])
+                    .join(', ');
+                break;
+        }
+
+        console[level](text);
+    }
+}
+
+/**
+ * default transport is console + text format
+ */
+let transports: LogTransport[] = [new ConsoleTransport(ConsoleFormat.Text)];
+
+/**
+ * Config log transports
+ * @param entries
+ */
+export const setLogTransports = (entries: LogTransport[]) => {
+    transports = entries;
+};
+
+const composeLog = (
     level: LogLevel,
-    msg: string | KVParams | Error,
-    params?: KVParams,
-    context?: KVParams
-): string => {
-    const log = Object.assign({}, context, params);
+    msg: string | Record<string, any> | Error,
+    params?: Record<string, any>,
+    context?: Record<string, any>
+): Record<string, any> => {
+    // generate the log object keys with { level, time, msg, ... }
+    const log: Record<string, any> = Object.assign(
+        { level, time: 0, msg: '' },
+        context,
+        params
+    );
     if (typeof msg === 'string') {
         log.msg = msg;
     } else if (msg instanceof Error) {
@@ -72,32 +106,20 @@ const formatLog = (
     log.level = level;
     log.time = formatTime(log.time);
 
-    switch (config.format) {
-        case LogFormat.JSON:
-            return JSON.stringify(log);
-        case LogFormat.Text:
-        default:
-            return Object.keys(log)
-                .map(key => key + '=' + log[key])
-                .join(', ');
-    }
+    return log;
 };
 
-const createLogMethod = (level: LogLevel, context?: KVParams) => (
-    msg: string | KVParams | Error,
-    params?: KVParams
+const createLogMethod = (level: LogLevel, context?: Record<string, any>) => (
+    msg: string | Record<string, any> | Error,
+    params?: Record<string, any>
 ) => {
-    if (logPriorityByLevel[level] < logPriorityByLevel[config.level]) {
-        return;
-    }
-    transports.forEach(transport =>
-        transport.write(formatLog(level, msg, params, context), level)
-    );
+    const log = composeLog(level, msg, params, context);
+    transports.forEach(transport => transport.write(level, log));
 };
 
-const createLogger = (context?: KVParams) => {
+const createLogger = (context?: Record<string, any>) => {
     const logger = {
-        bindContext: (subContext: KVParams) =>
+        bindContext: (subContext: Record<string, any>) =>
             createLogger(Object.assign({}, context, subContext)),
 
         debug: createLogMethod(LogLevel.Debug, context),
