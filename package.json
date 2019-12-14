@@ -1,7 +1,7 @@
 {
   "name": "kv-logger",
   "version": "0.2.2",
-  "description": "a lightweight logger tool for k-v style log",
+  "description": "a tiny logger that supports log with k-v params",
   "main": "lib/bundle.js",
   "module": "lib/index.js",
   "types": "lib/index.d.ts",
