@@ -78,7 +78,7 @@ let transports: LogTransport[] = [new ConsoleTransport(ConsoleFormat.Text)];
  * @param entries
  */
 export const setLogTransports = (entries: LogTransport[]) => {
-    transports = entries;
+    transports = entries.slice();
 };
 
 const composeLog = (
