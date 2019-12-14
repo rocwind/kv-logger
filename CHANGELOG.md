@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.2](https://github.com/rocwind/kv-logger/compare/v0.2.1...v0.2.2) (2019-12-14)
+
+
+### Features
+
+* add logger to default export ([a4430fb](https://github.com/rocwind/kv-logger/commit/a4430fb2429b2f2b331056655588cef1e9014ba1))
+
+
+### Bug Fixes
+
+* setLogTransports() make a copy of input array ([2e8b385](https://github.com/rocwind/kv-logger/commit/2e8b385abacdc2d13eadf57f8f852d41c573580e))
+
 ### [0.2.1](https://github.com/rocwind/kv-logger/compare/v0.2.0...v0.2.1) (2019-12-10)
 
 
