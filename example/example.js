@@ -5,7 +5,7 @@ const {
     ConsoleTransport,
     LogLevel,
     LogLevelFilter,
-} = require('../../lib/bundle.js');
+} = require('../lib/bundle.js');
 
 // config transport to console+ text format, filter log level by info and above
 setLogTransports([
