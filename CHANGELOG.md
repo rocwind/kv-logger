@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/rocwind/kv-logger/compare/v0.2.2...v0.3.0) (2020-01-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* refactor LogTransport interface
+
+### Features
+
+* refactor LogTransport interface ([26639a3](https://github.com/rocwind/kv-logger/commit/26639a36743479396a5c6ea70611ac35c25f92a7))
+
 ### [0.2.2](https://github.com/rocwind/kv-logger/compare/v0.2.1...v0.2.2) (2019-12-14)
 
 
