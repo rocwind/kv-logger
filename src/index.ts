@@ -1,4 +1,5 @@
 import { formatTime } from './format';
+export { formatTime } from './format';
 
 /**
  * Log levels
@@ -10,11 +11,30 @@ export enum LogLevel {
     Error = 'error',
 }
 
+export interface Log {
+    /**
+     * log level
+     */
+    level: LogLevel;
+    /**
+     * log message
+     */
+    msg: string;
+    /**
+     * log timestamp
+     */
+    time: number;
+    /**
+     * additional params
+     */
+    [key: string]: any;
+}
+
 /**
  * Interface that handles transport logs, can be extend to customized log output
  */
 export interface LogTransport {
-    write: (level: LogLevel, log: Record<string, any>) => void;
+    write: (log: Log) => void;
 }
 
 const logPriorityByLevel: Record<LogLevel, number> = {
@@ -29,11 +49,12 @@ const logPriorityByLevel: Record<LogLevel, number> = {
  */
 export class LogLevelFilter implements LogTransport {
     constructor(private transport: LogTransport, private level: LogLevel) {}
-    write(level: LogLevel, log: Record<string, any>) {
+    write(log: Log) {
+        const { level } = log;
         if (logPriorityByLevel[level] < logPriorityByLevel[this.level]) {
             return;
         }
-        this.transport.write(level, log);
+        this.transport.write(log);
     }
 }
 
@@ -50,21 +71,24 @@ export enum ConsoleFormat {
  */
 export class ConsoleTransport implements LogTransport {
     constructor(private format: ConsoleFormat) {}
-    write(level: LogLevel, log: Record<string, any>) {
+    write(log: Log) {
+        // format time to readable string for log
+        const time = formatTime(log.time);
+        const data = Object.assign({}, log, { time });
         let text: string;
         switch (this.format) {
             case ConsoleFormat.JSON:
-                text = JSON.stringify(log);
+                text = JSON.stringify(data);
                 break;
             case ConsoleFormat.Text:
             default:
-                text = Object.keys(log)
+                text = Object.keys(data)
                     .map(key => key + '=' + log[key])
                     .join(', ');
                 break;
         }
 
-        console[level](text);
+        console[log.level](text);
     }
 }
 
@@ -86,9 +110,9 @@ const composeLog = (
     msg: string | Record<string, any> | Error,
     params?: Record<string, any>,
     context?: Record<string, any>
-): Record<string, any> => {
+): Log => {
     // generate the log object keys with { level, time, msg, ... }
-    const log: Record<string, any> = Object.assign(
+    const log: Log = Object.assign(
         { level, time: 0, msg: '' },
         context,
         params
@@ -104,7 +128,7 @@ const composeLog = (
     }
 
     log.level = level;
-    log.time = formatTime(log.time);
+    log.time = log.time || Date.now();
 
     return log;
 };
@@ -116,7 +140,7 @@ const logMethod = (
     context?: Record<string, any>
 ) => {
     const log = composeLog(level, msg, params, context);
-    transports.forEach(transport => transport.write(level, log));
+    transports.forEach(transport => transport.write(log));
 };
 
 const bindLogMethod = (level: LogLevel, context?: Record<string, any>) => (

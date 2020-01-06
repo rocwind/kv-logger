@@ -14,8 +14,8 @@ const leftPadNumberStr = (num: number, digest = 2): string => {
  * YYYY-MM-DD hh:mm:ss.sss
  * @param timestamp
  */
-export const formatTime = (timestamp?: number): string => {
-    const date = timestamp ? new Date(timestamp) : new Date();
+export const formatTime = (timestamp: number): string => {
+    const date = new Date(timestamp);
     return (
         date.getFullYear() +
         '-' +
