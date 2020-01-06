@@ -73,8 +73,7 @@ export class ConsoleTransport implements LogTransport {
     constructor(private format: ConsoleFormat) {}
     write(log: Log) {
         // format time to readable string for log
-        const time = formatTime(log.time);
-        const data = Object.assign({}, log, { time });
+        const data = Object.assign({}, log, { time: formatTime(log.time) });
         let text: string;
         switch (this.format) {
             case ConsoleFormat.JSON:
