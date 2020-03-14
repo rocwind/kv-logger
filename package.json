@@ -32,6 +32,6 @@
     "del-cli": "3.0.0",
     "rollup": "2.0.6",
     "standard-version": "7.0.1",
-    "typescript": "3.7.4"
+    "typescript": "3.8.3"
   }
 }
