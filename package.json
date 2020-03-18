@@ -30,7 +30,7 @@
   "homepage": "https://github.com/rocwind/kv-logger#readme",
   "devDependencies": {
     "del-cli": "3.0.0",
-    "rollup": "2.0.6",
+    "rollup": "2.1.0",
     "standard-version": "7.1.0",
     "typescript": "3.8.3"
   }
