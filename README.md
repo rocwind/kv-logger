@@ -1,4 +1,4 @@
-# kv-logger
+# kv-logger ![Node.js CI](https://github.com/rocwind/kv-logger/workflows/Node.js%20CI/badge.svg)
 
 ---
 
