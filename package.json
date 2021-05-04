@@ -31,7 +31,7 @@
   "devDependencies": {
     "del-cli": "3.0.1",
     "rollup": "2.47.0",
-    "standard-version": "9.2.0",
+    "standard-version": "9.3.0",
     "typescript": "4.2.4"
   }
 }
