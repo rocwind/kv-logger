@@ -21,7 +21,7 @@ export interface Log {
      */
     msg: string;
     /**
-     * log timestamp
+     * log timestamp (milliseconds)
      */
     time: number;
     /**
@@ -82,7 +82,7 @@ export class ConsoleTransport implements LogTransport {
             case ConsoleFormat.Text:
             default:
                 text = Object.keys(data)
-                    .map(key => key + '=' + log[key])
+                    .map((key) => key + '=' + log[key])
                     .join(', ');
                 break;
         }
@@ -139,13 +139,13 @@ const logMethod = (
     context?: Record<string, any>
 ) => {
     const log = composeLog(level, msg, params, context);
-    transports.forEach(transport => transport.write(log));
+    transports.forEach((transport) => transport.write(log));
 };
 
-const bindLogMethod = (level: LogLevel, context?: Record<string, any>) => (
-    msg: string | Record<string, any> | Error,
-    params?: Record<string, any>
-) => logMethod(level, msg, params, context);
+const bindLogMethod =
+    (level: LogLevel, context?: Record<string, any>) =>
+    (msg: string | Record<string, any> | Error, params?: Record<string, any>) =>
+        logMethod(level, msg, params, context);
 
 const createLogger = (context?: Record<string, any>) => {
     const logger = {
