@@ -9,9 +9,9 @@
     "lib/"
   ],
   "scripts": {
-    "clean": "del-cli lib",
+    "clean": "rm -rf lib",
     "build": "npm run clean && npm run compile && rollup lib/index.js --file lib/bundle.js --format cjs",
-    "compile": "tsc --outDir lib -d",
+    "compile": "tsc -d",
     "release": "npm run build && standard-version && git push --follow-tags origin master && npm publish",
     "test": "npm run build && node example/example.js"
   },
@@ -29,7 +29,6 @@
   },
   "homepage": "https://github.com/rocwind/kv-logger#readme",
   "devDependencies": {
-    "del-cli": "3.0.1",
     "rollup": "2.49.0",
     "standard-version": "9.3.0",
     "typescript": "4.2.4"
