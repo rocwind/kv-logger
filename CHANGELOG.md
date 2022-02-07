@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0](https://github.com/rocwind/kv-logger/compare/v0.3.0...v0.4.0) (2022-02-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove the default export of logger instance
+
+### Features
+
+* deprecate enums ConsoleFormat and LogLevel, use string values in api ([2597aa8](https://github.com/rocwind/kv-logger/commit/2597aa8838bd573c837614eed27834f9e7bf88a6))
+
+
+### Bug Fixes
+
+* remove the default export of logger instance ([3214b86](https://github.com/rocwind/kv-logger/commit/3214b86abad67e2b85f1b6c2d14aeda4d6d71b0f))
+* use formated date time for console text log ([4de1132](https://github.com/rocwind/kv-logger/commit/4de1132d93117eda44bce77aa4a7783e148ac9aa))
+
 ## [0.3.0](https://github.com/rocwind/kv-logger/compare/v0.2.2...v0.3.0) (2020-01-06)
 
 
