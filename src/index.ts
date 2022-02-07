@@ -173,4 +173,3 @@ const createLogger = (context?: Record<string, any>) => {
 };
 
 export const logger = createLogger();
-export default logger;
