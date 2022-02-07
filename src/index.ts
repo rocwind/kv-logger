@@ -82,7 +82,7 @@ export class ConsoleTransport implements LogTransport {
             case ConsoleFormat.Text:
             default:
                 text = Object.keys(data)
-                    .map((key) => key + '=' + log[key])
+                    .map((key) => key + '=' + data[key])
                     .join(', ');
                 break;
         }
