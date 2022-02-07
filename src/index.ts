@@ -3,6 +3,7 @@ export { formatTime } from './format';
 
 /**
  * Log levels
+ * @deprecated please use: 'debug' | 'info' | 'warn' | 'error'
  */
 export enum LogLevel {
     Debug = 'debug',
@@ -11,11 +12,13 @@ export enum LogLevel {
     Error = 'error',
 }
 
+type Level = 'debug' | 'info' | 'warn' | 'error';
+
 export interface Log {
     /**
      * log level
      */
-    level: LogLevel;
+    level: Level;
     /**
      * log message
      */
@@ -37,11 +40,11 @@ export interface LogTransport {
     write: (log: Log) => void;
 }
 
-const logPriorityByLevel: Record<LogLevel, number> = {
-    [LogLevel.Debug]: 1,
-    [LogLevel.Info]: 2,
-    [LogLevel.Warn]: 3,
-    [LogLevel.Error]: 4,
+const logPriorityByLevel: Record<Level, number> = {
+    debug: 1,
+    info: 2,
+    warn: 3,
+    error: 4,
 };
 
 /**
@@ -60,26 +63,29 @@ export class LogLevelFilter implements LogTransport {
 
 /**
  * Formats that ConsoleTransport supports
+ * @deprecated please use: 'text' | 'json'
  */
 export enum ConsoleFormat {
     Text = 'text',
     JSON = 'json',
 }
 
+type Format = 'text' | 'json';
+
 /**
  * Default console log transport, output logs directly to console
  */
 export class ConsoleTransport implements LogTransport {
-    constructor(private format: ConsoleFormat) {}
+    constructor(private format: Format) {}
     write(log: Log) {
         // format time to readable string for log
         const data = Object.assign({}, log, { time: formatTime(log.time) });
         let text: string;
         switch (this.format) {
-            case ConsoleFormat.JSON:
+            case 'json':
                 text = JSON.stringify(data);
                 break;
-            case ConsoleFormat.Text:
+            case 'text':
             default:
                 text = Object.keys(data)
                     .map((key) => key + '=' + data[key])
@@ -105,7 +111,7 @@ export const setLogTransports = (entries: LogTransport[]) => {
 };
 
 const composeLog = (
-    level: LogLevel,
+    level: Level,
     msg: string | Record<string, any> | Error,
     params?: Record<string, any>,
     context?: Record<string, any>
@@ -133,7 +139,7 @@ const composeLog = (
 };
 
 const logMethod = (
-    level: LogLevel,
+    level: Level,
     msg: string | Record<string, any> | Error,
     params?: Record<string, any>,
     context?: Record<string, any>
@@ -143,7 +149,7 @@ const logMethod = (
 };
 
 const bindLogMethod =
-    (level: LogLevel, context?: Record<string, any>) =>
+    (level: Level, context?: Record<string, any>) =>
     (msg: string | Record<string, any> | Error, params?: Record<string, any>) =>
         logMethod(level, msg, params, context);
 
@@ -153,15 +159,15 @@ const createLogger = (context?: Record<string, any>) => {
             createLogger(Object.assign({}, context, subContext)),
 
         log: (
-            level: LogLevel,
+            level: Level,
             msg: string | Record<string, any> | Error,
             params?: Record<string, any>
         ) => logMethod(level, msg, params, context),
 
-        debug: bindLogMethod(LogLevel.Debug, context),
-        info: bindLogMethod(LogLevel.Info, context),
-        warn: bindLogMethod(LogLevel.Warn, context),
-        error: bindLogMethod(LogLevel.Error, context),
+        debug: bindLogMethod('debug', context),
+        info: bindLogMethod('info', context),
+        warn: bindLogMethod('warn', context),
+        error: bindLogMethod('error', context),
     };
     return logger;
 };
