@@ -51,7 +51,7 @@ const logPriorityByLevel: Record<Level, number> = {
  * Filter helper for filter logs by level
  */
 export class LogLevelFilter implements LogTransport {
-    constructor(private transport: LogTransport, private level: LogLevel) {}
+    constructor(private transport: LogTransport, private level: Level) {}
     write(log: Log) {
         const { level } = log;
         if (logPriorityByLevel[level] < logPriorityByLevel[this.level]) {
