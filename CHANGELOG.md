@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.2](https://github.com/rocwind/kv-logger/compare/v0.5.1...v0.5.2) (2022-02-11)
+
+
+### Bug Fixes
+
+* correct LogMessage type ([039d0a4](https://github.com/rocwind/kv-logger/commit/039d0a45c1518c5952fbe52a0d371f3ee36b4e1b))
+
 ### [0.5.1](https://github.com/rocwind/kv-logger/compare/v0.5.0...v0.5.1) (2022-02-11)
 
 
