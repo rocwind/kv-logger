@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.5.0](https://github.com/rocwind/kv-logger/compare/v0.4.1...v0.5.0) (2022-02-11)
+
+
+### ⚠ BREAKING CHANGES
+
+* change LogLevel to string enum, rename ConsoleTransport to ConsoleLogTransport
+
+### Features
+
+* support withLogScope to set global log context ([fe7728f](https://github.com/rocwind/kv-logger/commit/fe7728f39b49f433b3559cb5d723ee80da04aafa))
+
 ### [0.4.1](https://github.com/rocwind/kv-logger/compare/v0.4.0...v0.4.1) (2022-02-08)
 
 
