@@ -1,7 +1,7 @@
 const leftPadNumberStr = (num: number, digest = 2): string => {
     let bound = 10;
     let prefix = '';
-    for (var i = 1; i < digest; i++) {
+    for (let i = 1; i < digest; i++) {
         if (num < bound) {
             prefix += '0';
         }

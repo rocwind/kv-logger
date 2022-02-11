@@ -13,7 +13,7 @@
     "build": "npm run clean && npm run compile && rollup lib/index.js --file lib/bundle.js --format cjs",
     "compile": "tsc -d",
     "release": "npm run build && standard-version && git push --follow-tags origin master && npm publish",
-    "test": "npm run build && node example/example.js"
+    "test": "node example/example.js"
   },
   "repository": {
     "type": "git",
