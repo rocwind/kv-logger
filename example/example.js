@@ -2,12 +2,12 @@ const {
     logger,
     setLogTransports,
     ConsoleLogTransport,
-    withLogLevel,
+    withLogLevelFilter,
     withLogScope,
 } = require('../lib/bundle.js');
 
 // config transport to console+ text format, filter log level by info and above
-setLogTransports([withLogLevel('info')(new ConsoleLogTransport('text'))]);
+setLogTransports([withLogLevelFilter('info')(new ConsoleLogTransport('text'))]);
 
 // plain text
 logger.debug("you won't see this debug log as current level is info");

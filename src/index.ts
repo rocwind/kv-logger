@@ -4,6 +4,7 @@ export { withLogScope, pushLogScope, popLogScope } from './scope';
 export {
     LogLevelFilter,
     withLogLevel,
+    withLogLevelFilter,
     ConsoleLogTransport,
 } from './transports';
 export { Log, LogLevel, LogTransport } from './types';

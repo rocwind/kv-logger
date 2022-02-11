@@ -25,15 +25,20 @@ export class LogLevelFilter implements LogTransport {
 
 /**
  * create a log transport with log level filter
- * e.g. withLogLevel('info')(new ConsoleTransport('text'))
+ * e.g. withLogLevelFilter('info')(new ConsoleTransport('text'))
  * @param level
  * @returns
  */
-export function withLogLevel(
+export function withLogLevelFilter(
     level: LogLevel
 ): (transport: LogTransport) => LogTransport {
     return (transport: LogTransport) => new LogLevelFilter(transport, level);
 }
+
+/**
+ * @deprecated please use withLogLevelFilter()
+ */
+export const withLogLevel = withLogLevelFilter;
 
 /**
  * Default console log transport, output logs directly to console
