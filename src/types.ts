@@ -25,7 +25,7 @@ export interface Log {
     [key: string]: unknown;
 }
 
-export type LogMessage = string | Omit<Log, 'level' | 'msgg'> | Error;
+export type LogMessage = string | Omit<Log, 'level' | 'time'> | Error;
 
 /**
  * Interface that handles transport logs, can be extend to customized log output
