@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.1](https://github.com/rocwind/kv-logger/compare/v0.5.0...v0.5.1) (2022-02-11)
+
+
+### Bug Fixes
+
+* add withLogLevelFilter, deprecate withLogLevel ([89592ab](https://github.com/rocwind/kv-logger/commit/89592abe11e458394e52da215f7de7997c8c3552))
+* setLogTransports() supports set single transport ([3062f2f](https://github.com/rocwind/kv-logger/commit/3062f2ff14591aa11d7ee24e249934312fa02e92))
+
 ## [0.5.0](https://github.com/rocwind/kv-logger/compare/v0.4.1...v0.5.0) (2022-02-11)
 
 
