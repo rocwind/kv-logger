@@ -11,8 +11,12 @@ let transports: LogTransport[] = [new ConsoleLogTransport('text')];
  * configure log transports
  * @param entries
  */
-export function setLogTransports(entries: LogTransport[]): void {
-    transports = entries.slice();
+export function setLogTransports(entries: LogTransport[] | LogTransport): void {
+    if (Array.isArray(entries)) {
+        transports = entries.slice();
+    } else {
+        transports = [entries];
+    }
 }
 
 function composeLog(
