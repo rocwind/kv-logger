@@ -1,6 +1,6 @@
 {
   "name": "kv-logger",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "a tiny logger that supports log with k-v params",
   "main": "lib/bundle.js",
   "module": "lib/index.js",
