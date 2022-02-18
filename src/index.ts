@@ -1,5 +1,5 @@
 export { formatTime } from './format';
-export { logger, createLogger, setLogTransports } from './logger';
+export { logger, createLogger, setLogTransports, Logger } from './logger';
 export { withLogScope, pushLogScope, popLogScope } from './scope';
 export {
     LogLevelFilter,

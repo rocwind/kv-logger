@@ -48,7 +48,7 @@ function composeLog(
     return log;
 }
 
-class Logger {
+export class Logger {
     constructor(private context?: Record<string, unknown>) {}
 
     /**
