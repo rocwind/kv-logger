@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/rocwind/kv-logger#readme",
   "devDependencies": {
-    "rollup": "3.25.0",
+    "rollup": "3.25.1",
     "standard-version": "9.5.0",
     "typescript": "5.1.3"
   }
